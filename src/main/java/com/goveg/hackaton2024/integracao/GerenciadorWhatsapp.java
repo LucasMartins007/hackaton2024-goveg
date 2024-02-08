@@ -37,7 +37,7 @@ public class GerenciadorWhatsapp {
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
         final ResponseEntity<String> result = restClient.restTemplate()
                 .getForEntity(URL, String.class);
-        this.enviarMensagem("mensagem vinda do metodo receber mensagem");
+        this.enviarMensagem("mensagem vinda do metodo receber mensagem" + result.getBody());
 
         return result.getBody();
     }
