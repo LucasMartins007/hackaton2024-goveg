@@ -30,7 +30,7 @@ public class GerenciadorWhatsapp {
 
     public String receberMensagem(String mensagem) {
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
-        System.out.println("------------------------------------" + mensagem + "------------------------------------");
+        System.out.println("-----------------------------------------" + mensagem + "------------------------------------");
         final Map<String, String> params = extractParams(mensagem);
 
         final String bodyValue = params.get("Body");
