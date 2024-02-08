@@ -16,7 +16,7 @@ public class GerenciadorWhatsapp {
     public String ACCOUNT_SID = System.getenv("ACCOUNT_SID");
     public String AUTH_TOKEN = System.getenv("AUTH_TOKEN");
 
-    public static final String URL = "https://timberwolf-mastiff-9776.twil.io/demo-reply";
+    public static final String URL = "https://hackaton-c2ddd13cc9f5.herokuapp.com/hackaton/v1/whatsapp/receber";
 
 
     @Autowired
@@ -37,7 +37,10 @@ public class GerenciadorWhatsapp {
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
         final ResponseEntity<String> result = restClient.restTemplate()
                 .getForEntity(URL, String.class);
+
         this.enviarMensagem("mensagem vinda do metodo receber mensagem" + result.getBody());
+        System.out.println("-------------------------------------------mensagem enviada com sucesso---------------------------------");
+        System.out.println(result.getBody());
 
         return result.getBody();
     }
