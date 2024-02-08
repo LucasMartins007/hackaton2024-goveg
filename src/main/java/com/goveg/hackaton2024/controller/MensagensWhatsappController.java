@@ -18,9 +18,10 @@ public class MensagensWhatsappController {
         gerenciadorWhatsapp.enviarMensagem("mensagem enviada pelo controller");
     }
 
-    @GetMapping("/receber")
+    @PostMapping("/receber")
     @ResponseStatus(HttpStatus.OK)
     public String receberMensagem(@RequestBody String teste) {
+        System.out.println(teste);
         return gerenciadorWhatsapp.receberMensagem(teste);
     }
 }
