@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/whatsapp")
@@ -21,8 +23,7 @@ public class MensagensWhatsappController {
 
     @PostMapping("/receber")
     @ResponseStatus(HttpStatus.OK)
-    public String receberMensagem(@RequestBody HttpServletRequest request) {
-        System.out.println(request.getParameter("body"));
-        return gerenciadorWhatsapp.receberMensagem(request.getParameter("body"));
+    public String receberMensagem(@RequestBody String body) {
+        return gerenciadorWhatsapp.receberMensagem(body);
     }
 }

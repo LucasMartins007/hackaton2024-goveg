@@ -7,6 +7,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.util.HashMap;
+import java.util.Map;
+
 @Service
 @RequiredArgsConstructor
 public class GerenciadorWhatsapp {
@@ -32,6 +37,30 @@ public class GerenciadorWhatsapp {
 
     public String receberMensagem(String mensagem) {
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
-        return mensagem;
+        System.out.println("------------------------------------" + mensagem + "------------------------------------");
+        final Map<String, String> params = extractParams(mensagem);
+
+        final String bodyValue = params.get("Body");
+
+        System.out.println("------------------------------------ Valor do Body: " + bodyValue + "------------------------------------");
+        return bodyValue;
     }
+
+    private static Map<String, String> extractParams(String url) {
+        Map<String, String> params = new HashMap<>();
+        String[] urlParts = url.split("&");
+        for (String part : urlParts) {
+            String[] keyValue = part.split("=");
+            if (keyValue.length == 2) {
+                try {
+                    String decodedValue = URLDecoder.decode(keyValue[1], "UTF-8");
+                    params.put(keyValue[0], decodedValue);
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return params;
+    }
+
 }
