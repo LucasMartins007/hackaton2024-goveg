@@ -1,4 +1,4 @@
-package com.goveg.hackaton2024.model.dto;
+package com.goveg.hackaton2024.domain.dto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,9 +9,9 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class PropriedadeDTO {
+public class UsuarioPessoa {
 
-    private Integer id;
+    private Number id;
 
     private String nome;
 }

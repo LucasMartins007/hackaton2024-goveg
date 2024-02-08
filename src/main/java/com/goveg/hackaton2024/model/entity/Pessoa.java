@@ -1,8 +1,6 @@
 package com.goveg.hackaton2024.model.entity;
 
 
-import com.goveg.hackaton2024.model.dto.CulturaDTO;
-import com.goveg.hackaton2024.model.dto.PropriedadeDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
