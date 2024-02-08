@@ -5,9 +5,7 @@ import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 @Service
 @RequiredArgsConstructor
@@ -17,7 +15,6 @@ public class GerenciadorWhatsapp {
     public String AUTH_TOKEN = System.getenv("AUTH_TOKEN");
 
     public static final String URL = "https://hackaton-c2ddd13cc9f5.herokuapp.com/hackaton/v1/whatsapp/receber";
-
 
     @Autowired
     private RestTemplateBean restClient;
@@ -33,15 +30,8 @@ public class GerenciadorWhatsapp {
         System.out.println(message.getSid());
     }
 
-    public String receberMensagem() {
+    public String receberMensagem(String mensagem) {
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
-        final ResponseEntity<String> result = restClient.restTemplate()
-                .getForEntity(URL, String.class);
-
-        this.enviarMensagem("mensagem vinda do metodo receber mensagem" + result.getBody());
-        System.out.println("-------------------------------------------mensagem enviada com sucesso---------------------------------");
-        System.out.println(result.getBody());
-
-        return result.getBody();
+        return mensagem;
     }
 }
