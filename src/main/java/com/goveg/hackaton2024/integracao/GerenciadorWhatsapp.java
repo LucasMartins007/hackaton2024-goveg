@@ -13,10 +13,10 @@ import org.springframework.web.client.RestTemplate;
 @RequiredArgsConstructor
 public class GerenciadorWhatsapp {
 
-    public static final String ACCOUNT_SID = "AC185e9cdea484cf43b46c47b74e53c9c4";
-    public static final String AUTH_TOKEN = "3bf28eaefa2dbfe862027a60122b2695";
+    public String ACCOUNT_SID = System.getenv("ACCOUNT_SID");
+    public String AUTH_TOKEN = System.getenv("AUTH_TOKEN");
 
-    public static final String URL = "https://  -mastiff-9776.twil.io/demo-reply";
+    public static final String URL = "https://timberwolf-mastiff-9776.twil.io/demo-reply";
 
 
     @Autowired
