@@ -1,6 +1,7 @@
 package com.goveg.hackaton2024.controller;
 
 import com.goveg.hackaton2024.integracao.GerenciadorWhatsapp;
+import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +21,8 @@ public class MensagensWhatsappController {
 
     @PostMapping("/receber")
     @ResponseStatus(HttpStatus.OK)
-    public String receberMensagem(@RequestBody String teste) {
-        System.out.println(teste);
-        return gerenciadorWhatsapp.receberMensagem(teste);
+    public String receberMensagem(@RequestBody HttpServletRequest request) {
+        System.out.println(request.getParameter("body"));
+        return gerenciadorWhatsapp.receberMensagem(request.getParameter("body"));
     }
 }
