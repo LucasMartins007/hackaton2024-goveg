@@ -103,7 +103,13 @@ public class PropriedadesController {
         propriedades.forEach(propriedade ->
                 propriedade.getProdutos()
                         .stream()
-                        .filter(produto -> produto.getStatusPedido().equals(statusPedido))
+                        .filter(produto -> {
+                            if (statusPedido.equals(EnumStatusPedido.CONCLUIDO) || statusPedido.equals(EnumStatusPedido.ENTREGUE)) {
+                                return produto.getStatusPedido().equals(EnumStatusPedido.CONCLUIDO)
+                                        || produto.getStatusPedido().equals(EnumStatusPedido.ENTREGUE);
+                            }
+                            return produto.getStatusPedido().equals(statusPedido);
+                        })
                         .sorted(Comparator.comparing(Produto::getId))
                         .forEach(produto -> popularListaProdutoPedidoDTO(propriedade, produto, produtoPedidoDTOS))
         );

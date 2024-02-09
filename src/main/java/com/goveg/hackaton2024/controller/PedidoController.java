@@ -73,7 +73,7 @@ public class PedidoController {
         final Produto produto = produtoRepository.findById(produtoId)
                 .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
 
-        produto.setStatusPedido(EnumStatusPedido.CONCLUIDO);
+        produto.setStatusPedido(EnumStatusPedido.ENTREGUE);
 
         produtoRepository.save(produto);
 

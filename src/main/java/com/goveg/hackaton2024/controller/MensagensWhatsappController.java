@@ -102,7 +102,7 @@ public class MensagensWhatsappController {
             return "Ocorreu um erro nos nossos servidores, por favor, aguarde um momento";
         }
         final Optional<Pedido> pedido = pedidos.stream()
-                .filter(pedido1 -> pedido1.getStatusPedido().equals(EnumStatusPedido.ANDAMENTO))
+                .filter(pedido1 -> pedido1.getProduto().get(0).getStatusPedido().equals(EnumStatusPedido.ANDAMENTO))
                 .findFirst();
 
         if (pedido.isEmpty()) {
