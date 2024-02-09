@@ -66,6 +66,33 @@ public class PedidoController {
         mensagemRepository.save(mensagem);
     }
 
+    @PostMapping("/pagar")
+    @ResponseStatus(HttpStatus.OK)
+    public void pagarPedido(@RequestParam("produtoId") Integer produtoId) {
+        final Produto produto = produtoRepository.findById(produtoId)
+                .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+
+        produto.setStatusPedido(EnumStatusPedido.CONCLUIDO);
+        produto.setDataConclusao(new Date());
+
+        final Pedido pedido = produto.getPedido();
+        pedido.setStatusPedido(EnumStatusPedido.CONCLUIDO);
+
+        pedidoRepository.save(pedido);
+        produtoRepository.save(produto);
+
+        String mensagem =
+                """
+                        Foi confirmado o pagamento do pedido referente a %s, pode iniciar a entrega,                        
+                             """.formatted(produto.getTipoProduto().getDescricao());
+
+        gerenciadorWhatsapp.enviarMensagem(mensagem);
+
+        final Mensagem msg = new Mensagem();
+        msg.setMensagem(mensagem);
+        mensagemRepository.save(msg);
+    }
+
     private String formatarMensagem(Empresa empresa, Pedido pedido) {
         return """
                    A %s deseja fazer um pedido de %s Kg de %s no valor de R$ %s, deseja aceitar?
