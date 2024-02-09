@@ -63,13 +63,18 @@ public class MensagensWhatsappController {
     }
 
     private String respostaNegativa() {
-        final List<Pedido> pedidos = pedidoRepository.findAllByStatusPedido(EnumStatusPedido.ANDAMENTO);
+        final List<Pedido> pedidos = pedidoRepository.findAll();
+        if (pedidos.isEmpty()) {
+            return "Ocorreu um erro nos nossos servidores, por favor, aguarde um momento";
+        }
         final Optional<Pedido> pedido = pedidos.stream()
+                .filter(pedido1 -> pedido1.getStatusPedido().equals(EnumStatusPedido.ANDAMENTO))
                 .sorted()
                 .findFirst();
+
         if (pedido.isEmpty()) {
             return """ 
-                    Muito obrigado pela resposta, seu pedido foi cancelado com sucesso.
+                    O prazo para resposta desse pedido encerrou, você tem até 12 horas para responder aceitar um pedido.
                     """;
         }
 
@@ -88,19 +93,20 @@ public class MensagensWhatsappController {
     }
 
     private String respostaPositiva() {
-        final List<Pedido> pedidos = pedidoRepository.findAllByStatusPedido(EnumStatusPedido.ANDAMENTO);
+        final List<Pedido> pedidos = pedidoRepository.findAll();
+        if (pedidos.isEmpty()) {
+            return "Ocorreu um erro nos nossos servidores, por favor, aguarde um momento";
+        }
         final Optional<Pedido> pedido = pedidos.stream()
+                .filter(pedido1 -> pedido1.getStatusPedido().equals(EnumStatusPedido.ANDAMENTO))
                 .sorted()
                 .findFirst();
 
         if (pedido.isEmpty()) {
             return """ 
-                    Muito bem! o seu pedido foi confirmado e o seu cliente já foi notificado
-                    para realizar o pagamento.
-                    Te avisaremos quando o cliente realizar o pagamento.
+                    O prazo para resposta desse pedido encerrou, você tem até 12 horas para responder aceitar um pedido.
                     """;
         }
-
         pedido.get().setDataAceite(new Date());
         pedidoRepository.save(pedido.get());
         String mensagemEnviada = """ 
