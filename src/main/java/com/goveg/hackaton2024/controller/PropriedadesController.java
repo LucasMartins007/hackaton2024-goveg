@@ -60,24 +60,23 @@ public class PropriedadesController {
         produtoMorango.setCultura(EnumCultura.FRUTA);
         produtoMorango.setStatusPedido(EnumStatusPedido.ABERTO);
         produtoMorango.setValorUnitario(BigDecimal.valueOf(10.60));
-        produtoMorango.setDescricao("A descrição desse produto");
+        produtoMorango.setDescricao("Desfrute da doçura natural das nossos morangos cultivadas organicamente. Colhidas no auge da maturidade, esses morangos premium são uma explosão de sabor e frescor");
+        produtoRepository.save(produtoMorango);
 
 
         final Produto produtoUva = new Produto();
-
         final Propriedade propriedadeUva = propriedadeRepository.findById(propriedadeId).get();
         produtoUva.setPropriedade(propriedadeUva);
-
         produtoUva.setTipoProduto(EnumTipoProduto.UVA);
         produtoUva.setOrganico(true);
         produtoUva.setCultura(EnumCultura.FRUTA);
         produtoUva.setStatusPedido(EnumStatusPedido.ABERTO);
         produtoUva.setValorUnitario(BigDecimal.valueOf(8.60));
-        produtoUva.setDescricao("A descrição desse produto");
+        produtoUva.setDescricao("Deleite-se com a experiência única das nossas uvas viníferas cultivadas em um terroir exclusivo. Cada cacho é uma obra-prima da natureza, produzido com dedicação e expertise.");
+        produtoRepository.save(produtoUva);
 
 
         final Produto produtoBatata = new Produto();
-
         final Propriedade propriedadeBatata = propriedadeRepository.findById(propriedadeId).get();
         produtoBatata.setPropriedade(propriedadeBatata);
 
@@ -86,11 +85,8 @@ public class PropriedadesController {
         produtoBatata.setCultura(EnumCultura.LEGUME);
         produtoBatata.setStatusPedido(EnumStatusPedido.ABERTO);
         produtoBatata.setValorUnitario(BigDecimal.valueOf(15.90));
-        produtoBatata.setDescricao("A descrição desse produto");
-
+        produtoBatata.setDescricao("Nossas batatas são cultivadas de forma sustentável, respeitando o solo e o meio ambiente. Com uma pele fina e um interior macio, essas batatas orgânicas são ideais para uma variedade de pratos saudáveis e deliciosos.");
         produtoRepository.save(produtoBatata);
-        produtoRepository.save(produtoMorango);
-        produtoRepository.save(produtoUva);
     }
 
 

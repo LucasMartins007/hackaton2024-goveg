@@ -100,10 +100,7 @@ public class PedidoController {
         produtoRepository.save(produto);
 
         String mensagem =
-                """
-                        Foi confirmado o pagamento do pedido referente ao pedido %s, pode iniciar a entrega,                        
-                             """.formatted(produto.getId());
-
+                "Gostaríamos de informar que recebemos a confirmação de pagamento referente ao seu pedido. Com isso pode iniciar o processo de entrega.";
         gerenciadorWhatsapp.enviarMensagem(mensagem);
 
         final Mensagem msg = new Mensagem();
@@ -113,14 +110,16 @@ public class PedidoController {
 
     private String formatarMensagem(Empresa empresa, Pedido pedido) {
         return """
-                   A %s deseja fazer um pedido de %s Kg de %s no valor de R$ %s, deseja aceitar?
-                    1 - Sim
-                    2 - Não
+                   Olá, espero que esteja bem!
+                   A Ibis Cascavel solicitou %s Kg de %s, somando um  total de %s, para ser entregue no dia %s, deseja aceitar?
+                   
+                   1 - Confirmar
+                   2 - Cancelar
                 """.formatted(
-                empresa.getNome(),
                 pedido.getQuantidadeTotal(),
-                pedido.getProduto().get(0).getDescricao(),
-                pedido.getPrecototal()
+                pedido.getProduto().get(0).getTipoProduto().getDescricao(),
+                pedido.getPrecototal(),
+                pedido.getProduto().get(0).getDataEntrega()
         );
     }
 }

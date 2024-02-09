@@ -118,10 +118,10 @@ public class MensagensWhatsappController {
                     produtoRepository.save(produto);
                 });
         String mensagemEnviada = """ 
-                Muito bem! o seu pedido foi confirmado e o seu cliente já foi notificado
-                para realizar o pagamento.
-                Te avisaremos quando o cliente realizar o pagamento.
-                """;
+                Estamos felizes em informar que seu pedido foi confirmado com sucesso.
+                 Notificamos seu cliente para realizar o pagamento.
+                 Assim que recebermos a confirmação do pagamento, iremos avisá-los imediatamente.
+                 """;
 
         final Mensagem mensagem = new Mensagem();
         mensagem.setMensagem(mensagemEnviada);
