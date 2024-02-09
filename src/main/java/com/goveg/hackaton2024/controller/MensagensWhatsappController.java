@@ -41,6 +41,7 @@ public class MensagensWhatsappController {
     @ResponseStatus(HttpStatus.OK)
     public String receberMensagem(@RequestBody String body) {
         String resposta = gerenciadorWhatsapp.receberMensagem(body);
+        resposta = "1";
         int response;
         try {
             response = Integer.parseInt(resposta);

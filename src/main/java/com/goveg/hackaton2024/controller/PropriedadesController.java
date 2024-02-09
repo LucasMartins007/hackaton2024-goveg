@@ -79,14 +79,14 @@ public class PropriedadesController {
         final Produto produtoBatata = new Produto();
 
         final Propriedade propriedadeBatata = propriedadeRepository.findById(propriedadeId).get();
-        produtoUva.setPropriedade(propriedadeBatata);
+        produtoBatata.setPropriedade(propriedadeBatata);
 
-        produtoUva.setTipoProduto(EnumTipoProduto.BATATA);
-        produtoUva.setOrganico(true);
-        produtoUva.setCultura(EnumCultura.LEGUME);
-        produtoUva.setStatusPedido(EnumStatusPedido.ABERTO);
-        produtoUva.setValorUnitario(BigDecimal.valueOf(15.90));
-        produtoUva.setDescricao("A descrição desse produto");
+        produtoBatata.setTipoProduto(EnumTipoProduto.BATATA);
+        produtoBatata.setOrganico(true);
+        produtoBatata.setCultura(EnumCultura.LEGUME);
+        produtoBatata.setStatusPedido(EnumStatusPedido.ABERTO);
+        produtoBatata.setValorUnitario(BigDecimal.valueOf(15.90));
+        produtoBatata.setDescricao("A descrição desse produto");
 
         produtoRepository.save(produtoBatata);
         produtoRepository.save(produtoMorango);
