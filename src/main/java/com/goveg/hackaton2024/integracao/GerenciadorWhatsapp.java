@@ -39,10 +39,6 @@ public class GerenciadorWhatsapp {
     }
 
     public String receberMensagem(String mensagem) {
-        if (ACCOUNT_SID == null || AUTH_TOKEN == null) {
-            ACCOUNT_SID = "AC185e9cdea484cf43b46c47b74e53c9c4";
-            AUTH_TOKEN = "47d01b7ccd953917636381fbc5b1e20e";
-        }
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
         final Map<String, String> params = extractParams(mensagem);
 
