@@ -7,12 +7,16 @@ import com.goveg.hackaton2024.model.dto.UsuarioFornecedorDTO;
 import com.goveg.hackaton2024.model.entity.Empresa;
 import com.goveg.hackaton2024.model.entity.Produto;
 import com.goveg.hackaton2024.model.entity.Propriedade;
+import com.goveg.hackaton2024.model.enums.EnumCultura;
 import com.goveg.hackaton2024.model.enums.EnumStatusPedido;
+import com.goveg.hackaton2024.model.enums.EnumTipoProduto;
+import com.goveg.hackaton2024.repository.ProdutoRepository;
 import com.goveg.hackaton2024.repository.PropriedadeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,6 +28,54 @@ import java.util.stream.Collectors;
 public class PropriedadesController {
 
     private final PropriedadeRepository propriedadeRepository;
+
+    private final ProdutoRepository produtoRepository;
+
+    @PostMapping("/cadastrar")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void cadastrarProdutos(@RequestParam("propriedadeId") Integer propriedadeId) {
+        final Produto produtoMorango = new Produto();
+
+        final Propriedade propriedade = propriedadeRepository.findById(propriedadeId).get();
+        produtoMorango.setPropriedade(propriedade);
+
+        produtoMorango.setTipoProduto(EnumTipoProduto.MORANGO);
+        produtoMorango.setOrganico(true);
+        produtoMorango.setCultura(EnumCultura.FRUTA);
+        produtoMorango.setStatusPedido(EnumStatusPedido.ABERTO);
+        produtoMorango.setValorUnitario(BigDecimal.valueOf(10.60));
+        produtoMorango.setDescricao("A descrição desse produto");
+
+
+        final Produto produtoUva = new Produto();
+
+        final Propriedade propriedadeUva = propriedadeRepository.findById(propriedadeId).get();
+        produtoUva.setPropriedade(propriedadeUva);
+
+        produtoUva.setTipoProduto(EnumTipoProduto.UVA);
+        produtoUva.setOrganico(true);
+        produtoUva.setCultura(EnumCultura.FRUTA);
+        produtoUva.setStatusPedido(EnumStatusPedido.ABERTO);
+        produtoUva.setValorUnitario(BigDecimal.valueOf(8.60));
+        produtoUva.setDescricao("A descrição desse produto");
+
+
+        final Produto produtoBatata = new Produto();
+
+        final Propriedade propriedadeBatata = propriedadeRepository.findById(propriedadeId).get();
+        produtoUva.setPropriedade(propriedadeBatata);
+
+        produtoUva.setTipoProduto(EnumTipoProduto.BATATA);
+        produtoUva.setOrganico(true);
+        produtoUva.setCultura(EnumCultura.LEGUME);
+        produtoUva.setStatusPedido(EnumStatusPedido.ABERTO);
+        produtoUva.setValorUnitario(BigDecimal.valueOf(15.90));
+        produtoUva.setDescricao("A descrição desse produto");
+
+        produtoRepository.save(produtoBatata);
+        produtoRepository.save(produtoMorango);
+        produtoRepository.save(produtoUva);
+    }
 
 
     @GetMapping
