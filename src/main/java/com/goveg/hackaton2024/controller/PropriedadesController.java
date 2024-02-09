@@ -40,8 +40,8 @@ public class PropriedadesController {
         Propriedade propriedade = new Propriedade();
         propriedade.setNome("Fazenda seu João");
 
-        Empresa empresa = empresaRepository.findById(1).get();
-        propriedade.setEmpresa(empresa);
+        List<Empresa> empresa = empresaRepository.findAll();
+        propriedade.setEmpresa(empresa.get(0));
 
         propriedadeRepository.save(propriedade);
     }
