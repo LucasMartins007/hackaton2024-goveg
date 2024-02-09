@@ -34,11 +34,13 @@ public class ProdutoPedidoDTO {
 
     private Date dataAceite;
 
-    private String dataConclusao;
+    private Date dataConclusao;
+
+    private Date dataInclusao;
 
     private Boolean organico;
 
-    private Integer quantidade;
+    private BigDecimal quantidade;
 
     private UsuarioClienteDTO usuarioClienteDTO;
 

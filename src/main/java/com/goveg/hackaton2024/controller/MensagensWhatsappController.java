@@ -41,7 +41,7 @@ public class MensagensWhatsappController {
     @ResponseStatus(HttpStatus.OK)
     public String receberMensagem(@RequestBody String body) {
         String resposta = gerenciadorWhatsapp.receberMensagem(body);
-
+        resposta = "1";
         int response;
         try {
             response = Integer.parseInt(resposta);
@@ -115,6 +115,11 @@ public class MensagensWhatsappController {
         pedido.get().setDataAceite(new Date());
         pedidoRepository.save(pedido.get());
 
+        pedido.get().getProduto()
+                .forEach(produto -> {
+                    produto.setDataAceite(new Date());
+                    produtoRepository.save(produto);
+                });
         String mensagemEnviada = """ 
                 Muito bem! o seu pedido foi confirmado e o seu cliente já foi notificado
                 para realizar o pagamento.

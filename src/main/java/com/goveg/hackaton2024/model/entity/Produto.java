@@ -40,6 +40,14 @@ public class Produto {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataAceite;
 
+    @Column(name = "data_inclusao")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataInclusao;
+
+    @Column(name = "data_conslusao")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataConclusao;
+
     @Column(name = "valor_unitario")
     private BigDecimal valorUnitario;
 

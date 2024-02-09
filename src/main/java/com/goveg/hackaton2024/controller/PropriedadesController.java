@@ -119,6 +119,9 @@ public class PropriedadesController {
         dto.setOrganico(produto.isOrganico());
         dto.setPedidoTag(produto.getCultura());
         dto.setDataAceite(produto.getPedido() == null ? produto.getDataAceite() : produto.getPedido().getDataAceite());
+        dto.setQuantidade(produto.getPedido() == null ? null : produto.getPedido().getQuantidadeTotal());
+        dto.setDataConclusao(produto.getDataConclusao());
+        dto.setDataInclusao(produto.getDataInclusao());
         dto.setDescricaoProduto(produto.getDescricao());
         dto.setValor(produto.getValorUnitario());
         dto.setProdutoTipo(produto.getTipoProduto());

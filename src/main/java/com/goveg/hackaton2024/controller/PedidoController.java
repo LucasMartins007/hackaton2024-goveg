@@ -13,7 +13,9 @@ import org.aspectj.bridge.IMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,12 +46,13 @@ public class PedidoController {
         Pedido pedido = new Pedido();
         pedido.setStatusPedido(EnumStatusPedido.ANDAMENTO);
         pedido.setProduto(List.of(produto));
-        pedido.setPrecototal(confirmacaoPedidoDTO.getValorTotal());
+        pedido.setPrecototal(confirmacaoPedidoDTO.getQuantidade().multiply(produto.getValorUnitario()));
         pedido.setQuantidadeTotal(confirmacaoPedidoDTO.getQuantidade());
         pedido.setDataRecebimento(confirmacaoPedidoDTO.getDataRecebimento());
         pedido.setEmpresa(empresa);
         pedidoRepository.save(pedido);
 
+        produto.setDataInclusao(new Date());
         produto.setPedido(pedido);
         produto.setStatusPedido(EnumStatusPedido.ANDAMENTO);
         produtoRepository.save(produto);
