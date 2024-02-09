@@ -9,14 +9,12 @@ import com.goveg.hackaton2024.model.entity.Produto;
 import com.goveg.hackaton2024.model.enums.EnumStatusPedido;
 import com.goveg.hackaton2024.repository.*;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.bridge.IMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -34,6 +32,20 @@ public class PedidoController {
     private final GerenciadorWhatsapp gerenciadorWhatsapp;
 
     private final MensagemRepository mensagemRepository;
+
+    @PostMapping("/cancelar")
+    @ResponseStatus(HttpStatus.OK)
+    public void cancelarEntrega(@RequestParam("produtoId") Integer produtoId) {
+        final Produto produto = produtoRepository.findById(produtoId)
+                .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+        final Pedido pedido = produto.getPedido();
+
+        pedido.setStatusPedido(EnumStatusPedido.CANCELADO);
+        pedidoRepository.save(pedido);
+
+        produto.setStatusPedido(EnumStatusPedido.CANCELADO);
+        produtoRepository.save(produto);
+    }
 
     @PostMapping("/entregar")
     @ResponseStatus(HttpStatus.OK)
