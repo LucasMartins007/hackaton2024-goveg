@@ -97,7 +97,7 @@ public class PropriedadesController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<ProdutoPedidoDTO> listarPropriedades(@RequestParam("statusPedido") EnumStatusPedido statusPedido) {
-        List<Propriedade> propriedades = propriedadeRepository.findAllProdutosByStatus(statusPedido);
+        List<Propriedade> propriedades = propriedadeRepository.findAll();
 
         List<ProdutoPedidoDTO> produtoPedidoDTOS = new ArrayList<>();
         propriedades.forEach(propriedade ->
@@ -105,6 +105,8 @@ public class PropriedadesController {
                         .stream()
                         .filter(produto -> {
                             if (statusPedido.equals(EnumStatusPedido.CONCLUIDO) || statusPedido.equals(EnumStatusPedido.ENTREGUE)) {
+                                System.out.println(produto.getStatusPedido().equals(EnumStatusPedido.CONCLUIDO)
+                                        || produto.getStatusPedido().equals(EnumStatusPedido.ENTREGUE));
                                 return produto.getStatusPedido().equals(EnumStatusPedido.CONCLUIDO)
                                         || produto.getStatusPedido().equals(EnumStatusPedido.ENTREGUE);
                             }

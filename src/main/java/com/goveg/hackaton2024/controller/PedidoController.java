@@ -36,6 +36,28 @@ public class PedidoController {
 
     private final MensagemRepository mensagemRepository;
 
+    @PostMapping("/entregar")
+    @ResponseStatus(HttpStatus.OK)
+    public void confirmarEntrega(@RequestParam("produtoId") Integer produtoId) {
+        final Produto produto = produtoRepository.findById(produtoId)
+                .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+        final Pedido pedido = produto.getPedido();
+
+        pedido.setStatusPedido(EnumStatusPedido.CONCLUIDO);
+        pedidoRepository.save(pedido);
+
+        produto.setStatusPedido(EnumStatusPedido.CONCLUIDO);
+        produto.setDataConclusao(new Date());
+        produtoRepository.save(produto);
+
+        String mensagem = "O produto foi entregue com sucesso.";
+        gerenciadorWhatsapp.enviarMensagem(mensagem);
+
+        final Mensagem msg = new Mensagem();
+        msg.setMensagem(mensagem);
+        mensagemRepository.save(msg);
+    }
+
     @PostMapping("/confirmar")
     @ResponseStatus(HttpStatus.OK)
     public void confirmarPedido(@RequestBody ConfirmacaoPedidoDTO confirmacaoPedidoDTO, @RequestParam("produtoId") Integer produtoId) {
