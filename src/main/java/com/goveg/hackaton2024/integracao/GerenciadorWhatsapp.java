@@ -27,7 +27,7 @@ public class GerenciadorWhatsapp {
 
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
         Message message = Message.creator(
-                        new com.twilio.type.PhoneNumber("whatsapp:+554598281323"),
+                        new com.twilio.type.PhoneNumber("whatsapp:+554588244833"),
                         new com.twilio.type.PhoneNumber("whatsapp:+14155238886"),
                         mensagem)
                 .create();
