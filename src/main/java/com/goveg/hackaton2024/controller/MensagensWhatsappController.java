@@ -41,7 +41,6 @@ public class MensagensWhatsappController {
     @ResponseStatus(HttpStatus.OK)
     public String receberMensagem(@RequestBody String body) {
         String resposta = gerenciadorWhatsapp.receberMensagem(body);
-        resposta = "1";
         int response;
         try {
             response = Integer.parseInt(resposta);
@@ -69,7 +68,6 @@ public class MensagensWhatsappController {
         }
         final Optional<Pedido> pedido = pedidos.stream()
                 .filter(pedido1 -> pedido1.getStatusPedido().equals(EnumStatusPedido.ANDAMENTO))
-                .sorted()
                 .findFirst();
 
         if (pedido.isEmpty()) {
@@ -104,7 +102,6 @@ public class MensagensWhatsappController {
         }
         final Optional<Pedido> pedido = pedidos.stream()
                 .filter(pedido1 -> pedido1.getStatusPedido().equals(EnumStatusPedido.ANDAMENTO))
-                .sorted()
                 .findFirst();
 
         if (pedido.isEmpty()) {
