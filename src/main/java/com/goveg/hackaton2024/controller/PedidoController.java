@@ -130,16 +130,19 @@ public class PedidoController {
 
         return """
                    Olá, espero que esteja bem!
-                   A Ibis Cascavel solicitou %s Kg de %s, somando um  total de %s, para ser entregue no dia %s, deseja aceitar?
+                   A %s solicitou %s Kg de %s, somando um  total de %s reais, para o endereço: %s para ser entregue no dia %s
+                   deseja aceitar?
                    
                    Digite:
                    1 - Confirmar
                    2 - Cancelar
                 """.formatted(
+                pedido.getEmpresa().getEndereco(),
                 pedido.getQuantidadeTotal(),
                 produto.getTipoProduto().getDescricao(),
                 pedido.getPrecototal(),
-                dataFormatada
+                dataFormatada,
+                pedido.getEmpresa().getEndereco()
         );
     }
 }
