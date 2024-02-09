@@ -1,9 +1,6 @@
 package com.goveg.hackaton2024.controller;
 
-import com.goveg.hackaton2024.model.dto.EmpresaDTO;
-import com.goveg.hackaton2024.model.dto.ProdutoPedidoDTO;
-import com.goveg.hackaton2024.model.dto.UsuarioClienteDTO;
-import com.goveg.hackaton2024.model.dto.UsuarioFornecedorDTO;
+import com.goveg.hackaton2024.model.dto.*;
 import com.goveg.hackaton2024.model.entity.Empresa;
 import com.goveg.hackaton2024.model.entity.Produto;
 import com.goveg.hackaton2024.model.entity.Propriedade;
@@ -20,9 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -37,9 +32,9 @@ public class PropriedadesController {
 
     @PostMapping("/cadastrar")
     @ResponseStatus(HttpStatus.CREATED)
-    public void cadastrarPropriedade() {
+    public void cadastrarPropriedade(@RequestBody PropriedadeDTO propriedadeDTO) {
         Propriedade propriedade = new Propriedade();
-        propriedade.setNome("Fazenda seu João");
+        propriedade.setNome(propriedadeDTO.getNome());
 
         List<Empresa> empresa = empresaRepository.findAll();
         propriedade.setEmpresa(empresa.get(0));

@@ -16,10 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -111,8 +108,9 @@ public class PedidoController {
     }
 
     private String formatarMensagem(Empresa empresa, Pedido pedido) {
-        String dataFormatada = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy")
-                .format(pedido.getProduto().get(0).getDataEntrega());
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        String dataFormatada = formato.format(pedido.getProduto().get(0).getDataEntrega());
+
         return """
                    Olá, espero que esteja bem!
                    A Ibis Cascavel solicitou %s Kg de %s, somando um  total de %s, para ser entregue no dia %s, deseja aceitar?
