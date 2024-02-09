@@ -38,6 +38,8 @@ public class ProdutoPedidoDTO {
 
     private Date dataInclusao;
 
+    private Date dataEntrega;
+
     private Boolean organico;
 
     private BigDecimal quantidade;

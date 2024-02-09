@@ -48,6 +48,10 @@ public class Produto {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataConclusao;
 
+    @Column(name = "data_entrega")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataEntrega;
+
     @Column(name = "valor_unitario")
     private BigDecimal valorUnitario;
 

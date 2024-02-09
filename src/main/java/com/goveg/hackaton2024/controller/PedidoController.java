@@ -55,6 +55,7 @@ public class PedidoController {
         produto.setDataInclusao(new Date());
         produto.setPedido(pedido);
         produto.setStatusPedido(EnumStatusPedido.ANDAMENTO);
+        produto.setDataEntrega(confirmacaoPedidoDTO.getDataRecebimento());
         produtoRepository.save(produto);
 
         String mensagemEnviada = formatarMensagem(empresa, pedido);
@@ -91,7 +92,6 @@ public class PedidoController {
     private String formatarMensagem(Empresa empresa, Pedido pedido) {
         return """
                    A %s deseja fazer um pedido de %s Kg de %s no valor de R$ %s, deseja aceitar?
-                    \n
                     1 - Sim
                     2 - Não
                 """.formatted(
