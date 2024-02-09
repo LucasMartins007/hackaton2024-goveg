@@ -1,0 +1,14 @@
+package com.goveg.hackaton2024.model.dto;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class TotalDTO {
+
+    private long emAndamento;
+
+    private long total;
+
+}

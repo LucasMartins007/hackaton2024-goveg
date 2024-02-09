@@ -87,6 +87,18 @@ public class PropriedadesController {
         produtoBatata.setValorUnitario(BigDecimal.valueOf(15.90));
         produtoBatata.setDescricao("Nossas batatas são cultivadas de forma sustentável, respeitando o solo e o meio ambiente. Com uma pele fina e um interior macio, essas batatas orgânicas são ideais para uma variedade de pratos saudáveis e deliciosos.");
         produtoRepository.save(produtoBatata);
+
+        final Produto produtoTomate = new Produto();
+        final Propriedade propriedadeTomate = propriedadeRepository.findById(propriedadeId).get();
+        produtoTomate.setPropriedade(propriedadeTomate);
+
+        produtoTomate.setTipoProduto(EnumTipoProduto.ALHO);
+        produtoTomate.setOrganico(true);
+        produtoTomate.setCultura(EnumCultura.LEGUME);
+        produtoTomate.setStatusPedido(EnumStatusPedido.ABERTO);
+        produtoTomate.setValorUnitario(BigDecimal.valueOf(19.70));
+        produtoTomate.setDescricao("Nossos tomates heirloom são um deleite para os conhecedores. Com uma variedade de formas e cores vibrantes, esses tomates são cultivados com paixão e cuidado. Sinta o sabor autêntico e a textura suculenta que só os tomates sazonais podem oferecer");
+        produtoRepository.save(produtoTomate);
     }
 
 
