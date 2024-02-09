@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum EnumTipoProduto {
+public enum     EnumTipoProduto {
 
     UVA("Uva"),
 

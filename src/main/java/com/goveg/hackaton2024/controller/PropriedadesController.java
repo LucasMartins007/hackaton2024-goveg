@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -103,6 +104,7 @@ public class PropriedadesController {
                 propriedade.getProdutos()
                         .stream()
                         .filter(produto -> produto.getStatusPedido().equals(statusPedido))
+                        .sorted(Comparator.comparing(Produto::getId))
                         .forEach(produto -> popularListaProdutoPedidoDTO(propriedade, produto, produtoPedidoDTOS))
         );
         return produtoPedidoDTOS;
