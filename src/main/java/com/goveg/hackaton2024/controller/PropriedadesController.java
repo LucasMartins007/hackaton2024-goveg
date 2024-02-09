@@ -38,7 +38,7 @@ public class PropriedadesController {
     @ResponseStatus(HttpStatus.CREATED)
     public void cadastrarPropriedade() {
         Propriedade propriedade = new Propriedade();
-        propriedade.setNome("Uva são João");
+        propriedade.setNome("Fazenda seu João");
 
         Empresa empresa = empresaRepository.findById(1).get();
         propriedade.setEmpresa(empresa);
@@ -126,8 +126,8 @@ public class PropriedadesController {
 
     private void criarUsuarioClienteDTO(Propriedade propriedade, ProdutoPedidoDTO dto) {
         final UsuarioFornecedorDTO usuarioFornecedorDTO = new UsuarioFornecedorDTO();
-        usuarioFornecedorDTO.setId(propriedade.getEmpresa().getId());
-        usuarioFornecedorDTO.setNome(propriedade.getEmpresa().getNome());
+        usuarioFornecedorDTO.setId(propriedade.getId());
+        usuarioFornecedorDTO.setNome(propriedade.getNome());
         dto.setUsuarioFornecedorDTO(usuarioFornecedorDTO);
     }
 }
