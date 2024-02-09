@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -83,7 +84,7 @@ public class PedidoController {
         pedido.setQuantidadeTotal(confirmacaoPedidoDTO.getQuantidade());
         pedido.setDataRecebimento(confirmacaoPedidoDTO.getDataRecebimento());
         pedido.setEmpresa(empresa);
-        pedidoRepository.save(pedido);
+        pedido = pedidoRepository.save(pedido);
 
         produto.setDataInclusao(new Date());
         produto.setPedido(pedido);
@@ -91,7 +92,7 @@ public class PedidoController {
         produto.setDataEntrega(confirmacaoPedidoDTO.getDataRecebimento());
         produtoRepository.save(produto);
 
-        String mensagemEnviada = formatarMensagem(empresa, pedido);
+        String mensagemEnviada = formatarMensagem(empresa, pedido, confirmacaoPedidoDTO, produto);
         gerenciadorWhatsapp.enviarMensagem(mensagemEnviada);
 
         final Mensagem mensagem = new Mensagem();
@@ -119,9 +120,13 @@ public class PedidoController {
         mensagemRepository.save(msg);
     }
 
-    private String formatarMensagem(Empresa empresa, Pedido pedido) {
+    private String formatarMensagem(Empresa empresa, Pedido pedido, ConfirmacaoPedidoDTO confirmacaoPedidoDTO, Produto produto) {
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-        String dataFormatada = formato.format(pedido.getProduto().get(0).getDataEntrega());
+        String dataFormatada = formato.format(confirmacaoPedidoDTO.getDataRecebimento());
+
+        if(pedido.getProduto().isEmpty()) {
+
+        }
 
         return """
                    Olá, espero que esteja bem!
@@ -132,7 +137,7 @@ public class PedidoController {
                    2 - Cancelar
                 """.formatted(
                 pedido.getQuantidadeTotal(),
-                pedido.getProduto().get(0).getTipoProduto().getDescricao(),
+                produto.getTipoProduto().getDescricao(),
                 pedido.getPrecototal(),
                 dataFormatada
         );
