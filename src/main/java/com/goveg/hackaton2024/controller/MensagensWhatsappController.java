@@ -43,6 +43,7 @@ public class MensagensWhatsappController {
         String resposta = gerenciadorWhatsapp.receberMensagem(body);
 
         int response;
+        resposta = "2";
         try {
             response = Integer.parseInt(resposta);
         } catch (NumberFormatException e) {
@@ -77,9 +78,14 @@ public class MensagensWhatsappController {
                     O prazo para resposta desse pedido encerrou, você tem até 12 horas para responder aceitar um pedido.
                     """;
         }
-
         pedido.get().setStatusPedido(EnumStatusPedido.CANCELADO);
         pedidoRepository.save(pedido.get());
+
+        pedido.get().getProduto()
+                .forEach(produto -> {
+                    produto.setStatusPedido(EnumStatusPedido.CANCELADO);
+                    produtoRepository.save(produto);
+                });
         String mensagemEnviada = """ 
                 Muito obrigado pela resposta, seu pedido foi cancelado com sucesso.
                 """;
@@ -109,6 +115,7 @@ public class MensagensWhatsappController {
         }
         pedido.get().setDataAceite(new Date());
         pedidoRepository.save(pedido.get());
+
         String mensagemEnviada = """ 
                 Muito bem! o seu pedido foi confirmado e o seu cliente já foi notificado
                 para realizar o pagamento.

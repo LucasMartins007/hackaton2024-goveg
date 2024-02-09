@@ -50,7 +50,7 @@ public class PedidoController {
         pedido.setEmpresa(empresa);
         pedidoRepository.save(pedido);
 
-        produto.setStatusPedido(produto.getStatusPedido());
+        produto.setPedido(pedido);
         produto.setStatusPedido(EnumStatusPedido.ANDAMENTO);
         produtoRepository.save(produto);
 
