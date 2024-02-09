@@ -24,10 +24,7 @@ public class GerenciadorWhatsapp {
     public String AUTH_TOKEN = System.getenv("AUTH_TOKEN");
 
     public void enviarMensagem(String mensagem) {
-        if (ACCOUNT_SID == null || AUTH_TOKEN == null) {
-            ACCOUNT_SID = "AC185e9cdea484cf43b46c47b74e53c9c4";
-            AUTH_TOKEN = "47d01b7ccd953917636381fbc5b1e20e";
-        }
+
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
         Message message = Message.creator(
                         new com.twilio.type.PhoneNumber("whatsapp:+554598281323"),
