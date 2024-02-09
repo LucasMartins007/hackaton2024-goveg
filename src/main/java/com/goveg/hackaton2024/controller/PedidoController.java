@@ -127,12 +127,12 @@ public class PedidoController {
                    1 - Confirmar
                    2 - Cancelar
                 """.formatted(
-                pedido.getEmpresa().getEndereco(),
+                pedido.getEmpresa().getNome(),
                 pedido.getQuantidadeTotal(),
                 produto.getTipoProduto().getDescricao(),
                 pedido.getPrecototal(),
-                dataFormatada,
-                pedido.getEmpresa().getEndereco()
+                pedido.getEmpresa().getEndereco(),
+                dataFormatada
         );
     }
 }
