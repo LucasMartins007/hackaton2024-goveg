@@ -75,16 +75,12 @@ public class PedidoController {
         produto.setStatusPedido(EnumStatusPedido.CONCLUIDO);
         produto.setDataConclusao(new Date());
 
-        final Pedido pedido = produto.getPedido();
-        pedido.setStatusPedido(EnumStatusPedido.CONCLUIDO);
-
-        pedidoRepository.save(pedido);
         produtoRepository.save(produto);
 
         String mensagem =
                 """
-                        Foi confirmado o pagamento do pedido referente a %s, pode iniciar a entrega,                        
-                             """.formatted(produto.getTipoProduto().getDescricao());
+                        Foi confirmado o pagamento do pedido referente ao pedido %s, pode iniciar a entrega,                        
+                             """.formatted(produto.getId());
 
         gerenciadorWhatsapp.enviarMensagem(mensagem);
 
