@@ -108,7 +108,7 @@ public class PropriedadesController {
 
     private void popularListaProdutoPedidoDTO(Propriedade propriedade, Produto produto, List<ProdutoPedidoDTO> produtoPedidoDTOS) {
         final ProdutoPedidoDTO dto = new ProdutoPedidoDTO();
-        dto.setId(propriedade.getId());
+        dto.setId(produto.getId());
         dto.setDescricao(propriedade.getNome());
 
         criarUsuarioClienteDTO(propriedade, dto);

@@ -45,4 +45,7 @@ public class Produto {
     @JoinColumn(name = "propriedade_id", referencedColumnName = "id")
     private Propriedade propriedade;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pedido_id", referencedColumnName = "id")
+    private Pedido pedido;
 }
