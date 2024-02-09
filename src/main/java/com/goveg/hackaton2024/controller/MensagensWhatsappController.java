@@ -43,7 +43,6 @@ public class MensagensWhatsappController {
         String resposta = gerenciadorWhatsapp.receberMensagem(body);
 
         int response;
-        resposta = "2";
         try {
             response = Integer.parseInt(resposta);
         } catch (NumberFormatException e) {
