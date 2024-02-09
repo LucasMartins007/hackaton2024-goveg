@@ -14,6 +14,8 @@ public enum EnumStatusPedido {
 
     ANDAMENTO("Andamento"),
 
+    CANCELADO("Cancelado"),
+
     ENTREGUE("Entregue"),
 
     CONCLUIDO("Concluido");

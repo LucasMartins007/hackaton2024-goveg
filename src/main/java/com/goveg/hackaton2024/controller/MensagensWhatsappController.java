@@ -1,9 +1,11 @@
 package com.goveg.hackaton2024.controller;
 
 import com.goveg.hackaton2024.integracao.GerenciadorWhatsapp;
+import com.goveg.hackaton2024.model.entity.Mensagem;
 import com.goveg.hackaton2024.model.entity.Pedido;
 import com.goveg.hackaton2024.model.enums.EnumStatusPedido;
 import com.goveg.hackaton2024.repository.EmpresaRepository;
+import com.goveg.hackaton2024.repository.MensagemRepository;
 import com.goveg.hackaton2024.repository.PedidoRepository;
 import com.goveg.hackaton2024.repository.ProdutoRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +27,8 @@ public class MensagensWhatsappController {
     private final PedidoRepository pedidoRepository;
 
     private final EmpresaRepository empresaRepository;
+
+    private final MensagemRepository mensagemRepository;
 
     @PostMapping("/enviar")
     @ResponseStatus(HttpStatus.OK)
@@ -48,12 +52,45 @@ public class MensagensWhatsappController {
         }
         if (response == 1) {
             final List<Pedido> pedidos = pedidoRepository.findAllByStatusPedido(EnumStatusPedido.ANDAMENTO);
-            pedidos.forEach(pedido -> pedido.setDataAceite(new Date()));
-            pedidoRepository.saveAll(pedidos);
-            return """ 
-                    Muito bem! o seu pedido foi confirmado e o seu cliente já foi notificado.
-                    Faça alguma coisa depois daqui!
+            final Pedido pedido = pedidos.stream()
+                    .sorted()
+                    .findFirst()
+                    .get();
+
+            pedido.setDataAceite(new Date());
+            pedidoRepository.save(pedido);
+            String mensagemEnviada = """ 
+                    Muito bem! o seu pedido foi confirmado e o seu cliente já foi notificado
+                    para realizar o pagamento.
+                    Te avisaremos quando o cliente realizar o pagamento.
                     """;
+
+            final Mensagem mensagem = new Mensagem();
+            mensagem.setMensagem(mensagemEnviada);
+            mensagem.setPedido(pedido);
+            mensagemRepository.save(mensagem);
+
+            return mensagemEnviada;
+        }
+        if (response == 2) {
+            final List<Pedido> pedidos = pedidoRepository.findAllByStatusPedido(EnumStatusPedido.CANCELADO);
+            final Pedido pedido = pedidos.stream()
+                    .sorted()
+                    .findFirst()
+                    .get();
+
+            pedido.setDataAceite(new Date());
+            pedidoRepository.save(pedido);
+            String mensagemEnviada = """ 
+                    Muito obrigado pela resposta, seu pedido foi cancelado com sucesso.
+                    """;
+
+            final Mensagem mensagem = new Mensagem();
+            mensagem.setMensagem(mensagemEnviada);
+            mensagem.setPedido(pedido);
+            mensagemRepository.save(mensagem);
+
+            return mensagemEnviada;
         }
         return gerenciadorWhatsapp.receberMensagem(body);
     }
