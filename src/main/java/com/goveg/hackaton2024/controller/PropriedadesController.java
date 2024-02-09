@@ -101,6 +101,8 @@ public class PropriedadesController {
         List<ProdutoPedidoDTO> produtoPedidoDTOS = new ArrayList<>();
         propriedades.forEach(propriedade ->
                 propriedade.getProdutos()
+                        .stream()
+                        .filter(produto -> produto.getStatusPedido().equals(statusPedido))
                         .forEach(produto -> popularListaProdutoPedidoDTO(propriedade, produto, produtoPedidoDTOS))
         );
         return produtoPedidoDTOS;
