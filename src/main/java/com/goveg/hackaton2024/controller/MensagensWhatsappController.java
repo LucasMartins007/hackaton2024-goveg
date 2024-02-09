@@ -83,16 +83,9 @@ public class MensagensWhatsappController {
                     produto.setStatusPedido(EnumStatusPedido.CANCELADO);
                     produtoRepository.save(produto);
                 });
-        String mensagemEnviada = """ 
+        return """ 
                 Muito obrigado pela resposta, seu pedido foi cancelado com sucesso.
                 """;
-
-        final Mensagem mensagem = new Mensagem();
-        mensagem.setMensagem(mensagemEnviada);
-        mensagem.setPedido(pedido.get());
-        mensagemRepository.save(mensagem);
-
-        return mensagemEnviada;
     }
 
     private String respostaPositiva() {
@@ -118,17 +111,10 @@ public class MensagensWhatsappController {
                     produto.setDataAceite(new Date());
                     produtoRepository.save(produto);
                 });
-        String mensagemEnviada = """ 
+        return """ 
                 Estamos felizes em informar que seu pedido foi confirmado com sucesso.
                  Notificamos seu cliente para realizar o pagamento.
                  Assim que recebermos a confirmação do pagamento, iremos avisá-los imediatamente.
                  """;
-
-        final Mensagem mensagem = new Mensagem();
-        mensagem.setMensagem(mensagemEnviada);
-        mensagem.setPedido(pedido.get());
-        mensagemRepository.save(mensagem);
-
-        return mensagemEnviada;
     }
 }

@@ -94,11 +94,6 @@ public class PedidoController {
 
         String mensagemEnviada = formatarMensagem(empresa, pedido, confirmacaoPedidoDTO, produto);
         gerenciadorWhatsapp.enviarMensagem(mensagemEnviada);
-
-        final Mensagem mensagem = new Mensagem();
-        mensagem.setMensagem(mensagemEnviada);
-        mensagem.setPedido(pedido);
-        mensagemRepository.save(mensagem);
     }
 
     @PostMapping("/pagar")
@@ -114,10 +109,6 @@ public class PedidoController {
         String mensagem =
                 "Gostaríamos de informar que recebemos a confirmação de pagamento referente ao seu pedido. Com isso pode iniciar o processo de entrega.";
         gerenciadorWhatsapp.enviarMensagem(mensagem);
-
-        final Mensagem msg = new Mensagem();
-        msg.setMensagem(mensagem);
-        mensagemRepository.save(msg);
     }
 
     private String formatarMensagem(Empresa empresa, Pedido pedido, ConfirmacaoPedidoDTO confirmacaoPedidoDTO, Produto produto) {
@@ -130,8 +121,7 @@ public class PedidoController {
 
         return """
                    Olá, espero que esteja bem!
-                   A %s solicitou %s Kg de %s, somando um  total de %s reais, para o endereço: %s para ser entregue no dia %s
-                   deseja aceitar?
+                   A %s solicitou %s Kg de %s, somando um  total de %s reais, para o endereço: %s para ser entregue no dia %s, deseja aceitar?
                    
                    Digite:
                    1 - Confirmar
