@@ -73,7 +73,6 @@ public class PedidoController {
                 .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
 
         produto.setStatusPedido(EnumStatusPedido.CONCLUIDO);
-        produto.setDataConclusao(new Date());
 
         produtoRepository.save(produto);
 
