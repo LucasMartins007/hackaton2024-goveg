@@ -10,6 +10,7 @@ import com.goveg.hackaton2024.model.entity.Propriedade;
 import com.goveg.hackaton2024.model.enums.EnumCultura;
 import com.goveg.hackaton2024.model.enums.EnumStatusPedido;
 import com.goveg.hackaton2024.model.enums.EnumTipoProduto;
+import com.goveg.hackaton2024.repository.EmpresaRepository;
 import com.goveg.hackaton2024.repository.ProdutoRepository;
 import com.goveg.hackaton2024.repository.PropriedadeRepository;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +32,21 @@ public class PropriedadesController {
 
     private final ProdutoRepository produtoRepository;
 
+    private final EmpresaRepository empresaRepository;
+
     @PostMapping("/cadastrar")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void cadastrarPropriedade() {
+        Propriedade propriedade = new Propriedade();
+        propriedade.setNome("Uva são João");
+
+        Empresa empresa = empresaRepository.findById(1).get();
+        propriedade.setEmpresa(empresa);
+
+        propriedadeRepository.save(propriedade);
+    }
+
+    @PostMapping("/cadastrar/produto")
     @ResponseStatus(HttpStatus.CREATED)
     public void cadastrarProdutos(@RequestParam("propriedadeId") Integer propriedadeId) {
         final Produto produtoMorango = new Produto();
