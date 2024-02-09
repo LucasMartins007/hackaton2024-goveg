@@ -10,4 +10,6 @@ public class PropriedadeDTO {
     private Integer id;
 
     private String nome;
+
+    private String endereco;
 }

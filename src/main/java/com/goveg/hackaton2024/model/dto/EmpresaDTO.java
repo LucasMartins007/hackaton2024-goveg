@@ -10,4 +10,6 @@ public class EmpresaDTO {
     private Integer id;
 
     private String nome;
+
+    private String endereco;
 }

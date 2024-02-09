@@ -38,6 +38,7 @@ public class PropriedadesController {
 
         List<Empresa> empresa = empresaRepository.findAll();
         propriedade.setEmpresa(empresa.get(0));
+        propriedade.setEndereco(propriedade.getEndereco());
 
         propriedadeRepository.save(propriedade);
     }

@@ -24,6 +24,9 @@ public class Empresa {
     @Column(name = "nome")
     private String nome;
 
+    @Column(name = "endereco")
+    private String endereco;
+
     @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Pedido> pedido;
 

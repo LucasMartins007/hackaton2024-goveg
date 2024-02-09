@@ -23,6 +23,9 @@ public class Propriedade {
     @Column(name = "nome")
     private String nome;
 
+    @Column(name = "endereco")
+    private String endereco;
+
     @OneToMany(mappedBy = "propriedade", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Produto> produtos;
 
