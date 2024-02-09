@@ -40,10 +40,8 @@ public class MensagensWhatsappController {
     @PostMapping("/receber")
     @ResponseStatus(HttpStatus.OK)
     public String receberMensagem(@RequestBody String body) {
-        System.out.println(body);
         String resposta = gerenciadorWhatsapp.receberMensagem(body);
-        System.out.println(resposta);
-        resposta = body;
+
         int response;
         try {
             response = Integer.parseInt(resposta);
