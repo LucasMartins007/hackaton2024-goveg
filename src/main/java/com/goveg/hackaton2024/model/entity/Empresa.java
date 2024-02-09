@@ -1,0 +1,33 @@
+package com.goveg.hackaton2024.model.entity;
+
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.List;
+
+/**
+ * @author jhonatan
+ */
+
+@Entity
+@Getter
+@Setter
+@Table(name = "empresa")
+public class Empresa {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "empresa_id_gen")
+    @SequenceGenerator(name = "empresa_seq", sequenceName = "empresa_sequence", allocationSize = 1)
+    private Integer id;
+
+    @Column(name = "nome")
+    private String nome;
+
+    @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Pedido> pedido;
+
+
+    @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Propriedade> propriedades;
+}
