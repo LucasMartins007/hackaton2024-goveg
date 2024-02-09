@@ -40,7 +40,6 @@ public class MensagensWhatsappController {
     @ResponseStatus(HttpStatus.OK)
     public String receberMensagem(@RequestBody String body) {
         String resposta = gerenciadorWhatsapp.receberMensagem(body);
-
         int response;
         try {
             response = Integer.parseInt(resposta);
@@ -51,47 +50,55 @@ public class MensagensWhatsappController {
             return "Digite 1 para confirmar o pedido ou 2 para cancelar.";
         }
         if (response == 1) {
-            final List<Pedido> pedidos = pedidoRepository.findAllByStatusPedido(EnumStatusPedido.ANDAMENTO);
-            final Pedido pedido = pedidos.stream()
-                    .sorted()
-                    .findFirst()
-                    .get();
-
-            pedido.setDataAceite(new Date());
-            pedidoRepository.save(pedido);
-            String mensagemEnviada = """ 
-                    Muito bem! o seu pedido foi confirmado e o seu cliente já foi notificado
-                    para realizar o pagamento.
-                    Te avisaremos quando o cliente realizar o pagamento.
-                    """;
-
-            final Mensagem mensagem = new Mensagem();
-            mensagem.setMensagem(mensagemEnviada);
-            mensagem.setPedido(pedido);
-            mensagemRepository.save(mensagem);
-
-            return mensagemEnviada;
+            return respostaPositiva();
         }
         if (response == 2) {
-            final List<Pedido> pedidos = pedidoRepository.findAllByStatusPedido(EnumStatusPedido.CANCELADO);
-            final Pedido pedido = pedidos.stream()
-                    .sorted()
-                    .findFirst()
-                    .get();
-
-            pedido.setDataAceite(new Date());
-            pedidoRepository.save(pedido);
-            String mensagemEnviada = """ 
-                    Muito obrigado pela resposta, seu pedido foi cancelado com sucesso.
-                    """;
-
-            final Mensagem mensagem = new Mensagem();
-            mensagem.setMensagem(mensagemEnviada);
-            mensagem.setPedido(pedido);
-            mensagemRepository.save(mensagem);
-
-            return mensagemEnviada;
+            return respostaNegativa();
         }
         return gerenciadorWhatsapp.receberMensagem(body);
+    }
+
+    private String respostaNegativa() {
+        final List<Pedido> pedidos = pedidoRepository.findAllByStatusPedido(EnumStatusPedido.ANDAMENTO);
+        final Pedido pedido = pedidos.stream()
+                .sorted()
+                .findFirst()
+                .get();
+
+        pedido.setStatusPedido(EnumStatusPedido.CANCELADO);
+        pedidoRepository.save(pedido);
+        String mensagemEnviada = """ 
+                Muito obrigado pela resposta, seu pedido foi cancelado com sucesso.
+                """;
+
+        final Mensagem mensagem = new Mensagem();
+        mensagem.setMensagem(mensagemEnviada);
+        mensagem.setPedido(pedido);
+        mensagemRepository.save(mensagem);
+
+        return mensagemEnviada;
+    }
+
+    private String respostaPositiva() {
+        final List<Pedido> pedidos = pedidoRepository.findAllByStatusPedido(EnumStatusPedido.ANDAMENTO);
+        final Pedido pedido = pedidos.stream()
+                .sorted()
+                .findFirst()
+                .get();
+
+        pedido.setDataAceite(new Date());
+        pedidoRepository.save(pedido);
+        String mensagemEnviada = """ 
+                Muito bem! o seu pedido foi confirmado e o seu cliente já foi notificado
+                para realizar o pagamento.
+                Te avisaremos quando o cliente realizar o pagamento.
+                """;
+
+        final Mensagem mensagem = new Mensagem();
+        mensagem.setMensagem(mensagemEnviada);
+        mensagem.setPedido(pedido);
+        mensagemRepository.save(mensagem);
+
+        return mensagemEnviada;
     }
 }
