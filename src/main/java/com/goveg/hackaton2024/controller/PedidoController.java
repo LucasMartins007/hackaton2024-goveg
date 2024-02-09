@@ -38,7 +38,7 @@ public class PedidoController {
     @ResponseStatus(HttpStatus.OK)
     public void confirmarPedido(@RequestBody ConfirmacaoPedidoDTO confirmacaoPedidoDTO, @RequestParam("produtoId") Integer produtoId) {
         final Produto produto = produtoRepository.findById(produtoId)
-                .orElse(new Produto());
+                .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
         final Empresa empresa = empresaRepository.findById(1).get();
 
         Pedido pedido = new Pedido();
@@ -50,6 +50,7 @@ public class PedidoController {
         pedido.setEmpresa(empresa);
         pedidoRepository.save(pedido);
 
+        produto.setStatusPedido(produto.getStatusPedido());
         produto.setStatusPedido(EnumStatusPedido.ANDAMENTO);
         produtoRepository.save(produto);
 

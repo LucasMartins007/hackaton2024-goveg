@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -39,13 +40,18 @@ public class MensagensWhatsappController {
     @PostMapping("/receber")
     @ResponseStatus(HttpStatus.OK)
     public String receberMensagem(@RequestBody String body) {
+        System.out.println(body);
         String resposta = gerenciadorWhatsapp.receberMensagem(body);
+        System.out.println(resposta);
+        resposta = body;
         int response;
         try {
             response = Integer.parseInt(resposta);
         } catch (NumberFormatException e) {
             return "Digite 1 para confirmar o pedido ou 2 para cancelar.";
         }
+
+
         if (response > 2) {
             return "Digite 1 para confirmar o pedido ou 2 para cancelar.";
         }
@@ -60,20 +66,24 @@ public class MensagensWhatsappController {
 
     private String respostaNegativa() {
         final List<Pedido> pedidos = pedidoRepository.findAllByStatusPedido(EnumStatusPedido.ANDAMENTO);
-        final Pedido pedido = pedidos.stream()
+        final Optional<Pedido> pedido = pedidos.stream()
                 .sorted()
-                .findFirst()
-                .get();
+                .findFirst();
+        if (pedido.isEmpty()) {
+            return """ 
+                    Muito obrigado pela resposta, seu pedido foi cancelado com sucesso.
+                    """;
+        }
 
-        pedido.setStatusPedido(EnumStatusPedido.CANCELADO);
-        pedidoRepository.save(pedido);
+        pedido.get().setStatusPedido(EnumStatusPedido.CANCELADO);
+        pedidoRepository.save(pedido.get());
         String mensagemEnviada = """ 
                 Muito obrigado pela resposta, seu pedido foi cancelado com sucesso.
                 """;
 
         final Mensagem mensagem = new Mensagem();
         mensagem.setMensagem(mensagemEnviada);
-        mensagem.setPedido(pedido);
+        mensagem.setPedido(pedido.get());
         mensagemRepository.save(mensagem);
 
         return mensagemEnviada;
@@ -81,13 +91,20 @@ public class MensagensWhatsappController {
 
     private String respostaPositiva() {
         final List<Pedido> pedidos = pedidoRepository.findAllByStatusPedido(EnumStatusPedido.ANDAMENTO);
-        final Pedido pedido = pedidos.stream()
+        final Optional<Pedido> pedido = pedidos.stream()
                 .sorted()
-                .findFirst()
-                .get();
+                .findFirst();
 
-        pedido.setDataAceite(new Date());
-        pedidoRepository.save(pedido);
+        if (pedido.isEmpty()) {
+            return """ 
+                    Muito bem! o seu pedido foi confirmado e o seu cliente já foi notificado
+                    para realizar o pagamento.
+                    Te avisaremos quando o cliente realizar o pagamento.
+                    """;
+        }
+
+        pedido.get().setDataAceite(new Date());
+        pedidoRepository.save(pedido.get());
         String mensagemEnviada = """ 
                 Muito bem! o seu pedido foi confirmado e o seu cliente já foi notificado
                 para realizar o pagamento.
@@ -96,7 +113,7 @@ public class MensagensWhatsappController {
 
         final Mensagem mensagem = new Mensagem();
         mensagem.setMensagem(mensagemEnviada);
-        mensagem.setPedido(pedido);
+        mensagem.setPedido(pedido.get());
         mensagemRepository.save(mensagem);
 
         return mensagemEnviada;
