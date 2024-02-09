@@ -118,8 +118,8 @@ public class PropriedadesController {
         dto.setStatus(produto.getStatusPedido());
         dto.setOrganico(produto.isOrganico());
         dto.setPedidoTag(produto.getCultura());
+        dto.setDataAceite(produto.getPedido() == null ? produto.getDataAceite() : produto.getPedido().getDataAceite());
         dto.setDescricaoProduto(produto.getDescricao());
-        dto.setDataAceite(new Date());
         dto.setValor(produto.getValorUnitario());
         dto.setProdutoTipo(produto.getTipoProduto());
 

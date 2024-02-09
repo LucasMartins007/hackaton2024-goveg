@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -34,6 +35,10 @@ public class Produto {
 
     @Column(name = "descricao")
     private String descricao;
+
+    @Column(name = "data_aceite")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataAceite;
 
     @Column(name = "valor_unitario")
     private BigDecimal valorUnitario;
